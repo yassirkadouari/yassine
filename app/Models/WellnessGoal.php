@@ -1,0 +1,32 @@
+<?php
+// app/Models/WellnessGoal.php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class WellnessGoal extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'title',
+        'description',
+        'category',
+        'start_date',
+        'target_date',
+        'status',
+        'progress'
+    ];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'target_date' => 'date'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
