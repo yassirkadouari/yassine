@@ -17,7 +17,10 @@ class User extends Authenticatable
         'birth_date',
         'gender',
         'phone',
-        'emergency_contact'
+        'phone',
+        'emergency_contact',
+        'role',
+        'is_approved',
     ];
 
     protected $hidden = [
@@ -59,4 +62,18 @@ class User extends Authenticatable
     {
         return $this->hasOne(MoodTracking::class)->whereDate('date', today());
     }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+    public function isAdmin() { return $this->role === 'admin'; }
+    public function isDoctor() { return $this->role === 'doctor'; }
+    public function isStudent() { return $this->role === 'student'; }
 }
